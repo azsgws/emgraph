@@ -19,6 +19,7 @@ import os
 from emgraph.modules import change_layout
 from emgraph.modules import calc_graph
 from mizar_graph.settings import GRAPH_DIR
+from mizar_graph.settings import MODULES_DIR
 import matplotlib.pyplot as plt
 
 
@@ -1180,14 +1181,20 @@ def create_graph(select_categories, layout='sfdp'):  # ['bipartite', 'circular',
 
     """
     # mizarライブラリから依存関係のデータを取得
-    lib_dict = retrieve_environment.make_library_dependency()
-    lib_dict = retrieve_environment.make_marge_category2article_dependency(lib_dict, select_categories)
-    lib_dict = retrieve_environment.merge_category2article_dependency(lib_dict)
-    
+    #lib_dict = retrieve_environment.make_library_dependency()
+    #lib_dict = retrieve_environment.make_marge_category2article_dependency(lib_dict, select_categories)
+    #lib_dict = retrieve_environment.merge_category2article_dependency(lib_dict)
+
+    # articleを取得
+    with open(MODULES_DIR + "/mml_graph.json", "r") as f:
+        lib_dict = json.load(f)    # ここのコメントを外すと，nodes.jsonを読み込みます
+        print("load 'mml_graph.json")
+
     # theoremを取得
-    with open('nodes.json', 'r') as f:
-        print('json no yomikomi')
+    with open(MODULES_DIR + '/nodes.json', 'r') as f:
         #lib_dict = json.load(f)    # ここのコメントを外すと，nodes.jsonを読み込みます
+        print("load 'nodes.json'")
+
     input_node_dict = lib_dict
     print(len(input_node_dict))
 
@@ -1306,6 +1313,6 @@ def create_graph(select_categories, layout='sfdp'):  # ['bipartite', 'circular',
     #pos = nx.circular_layout(graph)
     pos = create_networkx_pos_from_node(node_list)
     nx.draw_networkx(graph, pos=pos)
-    plt.savefig('layered_theorem_graph.svg', format="svg")
+    plt.savefig(MODULES_DIR + '/layered_theorem_graph.svg', format="svg")
 
     return graph_json

@@ -126,3 +126,5 @@ STATICFILES_DIRS = (
 )
 
 GRAPH_DIR = os.path.join(BASE_DIR, 'emgraph', 'graph_attrs')
+
+MODULES_DIR = os.path.join(BASE_DIR, 'emgraph', 'modules')  # 削除予定
