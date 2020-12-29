@@ -1187,7 +1187,7 @@ def create_graph(select_categories, layout='sfdp'):  # ['bipartite', 'circular',
 
     # articleを取得
     with open(MODULES_DIR + "/mml_graph.json", "r") as f:
-        lib_dict = json.load(f)    # ここのコメントを外すと，nodes.jsonを読み込みます
+        lib_dict = json.load(f)    # 今はとりあえず，mmlの依存関係ファイルを読み込んでいます
         print("load 'mml_graph.json")
 
     # theoremを取得
