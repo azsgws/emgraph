@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>index</title>
+    </head>
+    <body>
+        <h1>Please select categories.</h1>
+        <form action="show_graph" method="POST">
+            {% csrf_token %}
+            {% if categories %}
+                <p>
+                {% for category in categories %}
+                    <input type='checkbox' name='category' value={{category}}>{{category}}
+                {% endfor %}
+                <input type="button" value="create" onclick="post_categories()" id="recreate">
+                <buttom type="submit" value="create" id="create">
+                </p>
+            {% else %}
+                <p>NO CATEGORIES</p>
+            {% endif %}
+        </form>  
+        <script>
+            function post_categories(){
+                const selected_categories = [];
+                const categories = document.getElementsByName("category");
+                for (let i=0; i<categories.length; i++){
+                    if(categories[i].checked){
+                        selected_categories.push(categories[i].value);
+                    }
+                }
+                const merge_categories = {merge_categories: selected_categories};
+                const merge_categories_json = JSON.stringify(merge_categories);
+                console.log(merge_categories_json);
+            }
+
+        </script>
+    </body>
+</html>

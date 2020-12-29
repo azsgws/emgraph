@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>emgraph</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        {% load static %}
+        <script src="{% static "emgraph/cytoscape.js/dist/cytoscape.min.js" %}"></script>
+        <link rel="stylesheet" type="text/css" href="{% static "emgraph/CSS/style.css"%}"></link>
+        {{ graph_elements|json_script:"graph_elements" }}
+        <script src="{% static "emgraph/JavaScript/draw_graph.js" %}?date=20201102"></script>
+    </head>
+    <body>
+        <div>
+            <input type="text" name="article_name" id="article_name" autocomplete="on"
+                placeholder="&#xf002; Search Article" list="article_list" spellcheck="false">
+            <datalist id="article_list">
+            </datalist>
+            <input type="submit" value="search" id="search">
+            <p style="display:inline;" id="select_article">SELECT: </p>
+            <br>
+            <p style="display:inline;">Upper Level</p>
+            <input type="number" name="ancestor_generations" id="ancestor_generations" value="1" min="0" max="100">
+            <p style="display:inline;">Lower Level</p>
+            <input type="number" name="ancestor_generations" id="descendant_generations" value="1" min="0" max="100">
+            <br>
+            <button type="button" value="reload" id="reload">reload</button>
+            <input type="text" name="lauyout_name" id="layout_name" autocomplete="on"
+                placeholder="&#xf002; Search Article" list="layuout_list" spellcheck="false">
+            <datalist id="layout_list">
+            </datalist>
+            <input type="submit" value="change layout" id="change_layout">
+        </div>
+        <div id="graph">
+        </div>
+    </body>
+</html>

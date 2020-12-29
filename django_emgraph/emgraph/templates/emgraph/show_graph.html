@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>mizar_graph</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        {% load static %}
+        <script src="{% static "mizar_graph_app/cytoscape.js/dist/cytoscape.min.js" %}"></script>
+        <link rel="stylesheet" type="text/css" href="{% static "mizar_graph_app/CSS/style.css"%}">
+        {{ graph_elements|json_script:"graph_elements" }}
+        <script src="{% static "mizar_graph_app/JavaScript/draw_graph.js" %}"></script>
+    </head>
+    <body>
+        <!-- forms.pyの検証 -->
+        {{ message }}
+        <form method="get" action="">
+            CATEGORIES:
+            {% for category in form.categories %}
+                {{ category }}
+            {% endfor %}
+            <input type="submit" value="create">
+            <br>
+        </form>
+        <!-- forms.pyの検証(ここまで) -->  
+        <div>
+            <input type="text" name="article_name" id="article_name" autocomplete="on"
+                placeholder="&#xf002; Search Article" list="article_list" spellcheck="false">
+            <datalist id="article_list">
+            </datalist>
+            <input type="submit" value="search" id="search">
+            <p style="display:inline;" id="select_article">SELECT: </p>
+            <br>
+            <p style="display:inline;">Upper Level</p>
+            <input type="number" name="ancestor_generations" id="ancestor_generations" value="1" min="0" max="1000">
+            <p style="display:inline;">Lower Level</p>
+            <input type="number" name="ancestor_generations" id="descendant_generations" value="1" min="0" max="1000">
+            <br>
+            <button type="button" value="reload" id="reload">reset</button>
+        </div>
+        <div id="graph">
+            
+        </div>
+        <script>
+            function post_categories(){
+                const selected_categories = [];
+                const categories = document.getElementsByName("category");
+                for (let i=0; i<categories.length; i++){
+                    if(categories[i].checked){
+                        selected_categories.push(categories[i].value);
+                    }
+                }
+                const merge_categories = {merge_categories: selected_categories};
+                const merge_categories_json = JSON.stringify(merge_categories);
+                console.log(merge_categories_json);
+            }
+        </script>
+    </body>
+</html>
